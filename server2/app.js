@@ -6,7 +6,7 @@ const mysql = require('mysql');
 const connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: 'hockey04',
+  password: 'Sadra1234.',
   database: 'lab5'
 });
 
@@ -92,6 +92,12 @@ const server = http.createServer((req, res) => {
   } else if (req.method === 'GET') {
     if (pathname === '/query') {
       const query = parsedUrl.query.query;
+      if(!isSelectQuery(query)) {
+        res.writeHead(400, { 'Content-Type': 'text/plain' });
+        res.end('Only SELECT queries are allowed');
+        return;
+      }
+
       connection.query(query, (err, result) => {
         if (err) {
           res.writeHead(500, { 'Content-Type': 'text/plain' });
@@ -107,6 +113,11 @@ const server = http.createServer((req, res) => {
     res.end('404 Not Found');
   }
 });
+
+// Function to check if the query is a SELECT query
+function isSelectQuery(query) {
+  return query.trim().substring(0, 6).toUpperCase() === 'SELECT';
+}
 
 // Listen on port 3000
 const PORT = process.env.PORT || 3000;
