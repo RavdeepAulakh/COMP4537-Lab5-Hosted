@@ -76,8 +76,8 @@ class Lab5Client {
     xhr.onload = function() {
         if (xhr.status === 200) {
             const response = JSON.parse(xhr.responseText);
-            const formattedResponse = JSON.stringify(response, null, 2); // Format the response
-            document.getElementById("insertResponse").innerText = formattedResponse; // Display the response
+            const message = response.message;
+            document.getElementById("executeResponse").innerText = message; // Display the response
             console.log(response);
         } else {
             console.error('Error:', xhr.statusText);

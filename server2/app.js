@@ -75,16 +75,15 @@ const server = http.createServer((req, res) => {
             }
           });
         } else {
-          // If postData is a single object, insert a single patient
-          const { name, dateOfBirth } = postData;
-          const insertQuery = `INSERT INTO patients (name, dateOfBirth) VALUES (?, ?)`;
-          connection.query(insertQuery, [name, dateOfBirth], (err, result) => {
+          const insertQuery = decodeURIComponent(postData.query);
+          console.log(insertQuery);
+          connection.query(insertQuery, (err, result) => {
             if (err) {
               res.writeHead(500, { 'Content-Type': 'text/plain' });
-              res.end('Error inserting data into database');
+              res.end(JSON.stringify({ error: 'Error inserting data into database' }));
             } else {
               res.writeHead(200, { 'Content-Type': 'text/plain' });
-              res.end('Data inserted successfully');
+              res.end(JSON.stringify({ message: 'Data inserted successfully' }));
             }
           });
         }
