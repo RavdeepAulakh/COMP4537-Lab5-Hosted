@@ -19,7 +19,7 @@ class Lab5Client {
         } else if (query.toLowerCase().startsWith('select')) {
             this.executeQuery();
         } else {
-            console.error('Unsupported query. Only INSERT and SELECT queries are allowed.');
+            this.executeInsertQuery();
         }
   }
 
@@ -39,11 +39,11 @@ class Lab5Client {
               document.getElementById("insertResponse").innerHTML = xhr.responseText;
               console.log(xhr.responseText);
           } else {
-              console.error('Error:', xhr.statusText);
+              console.error(ERROR, xhr.statusText);
           }
       };
       xhr.onerror = function () {
-          console.error('Request failed');
+          console.error(FAIL);
       };
       xhr.send(JSON.stringify(patients));
   }
@@ -59,11 +59,11 @@ class Lab5Client {
               document.getElementById("executeResponse").innerHTML = formattedResponse;
               console.log(JSON.parse(xhr.responseText));
           } else {
-              console.error('Error:', xhr.statusText);
+              console.error(ERROR, xhr.statusText);
           }
       };
       xhr.onerror = function () {
-          console.error('Request failed');
+          console.error(FAIL);
       };
       xhr.send();
   }
@@ -80,11 +80,11 @@ class Lab5Client {
             document.getElementById("executeResponse").innerText = message; // Display the response
             console.log(response);
         } else {
-            console.error('Error:', xhr.statusText);
+            console.error(ERROR, xhr.statusText);
         }
     };
     xhr.onerror = function() {
-        console.error('Request failed');
+        console.error(FAIL);
     };
     xhr.send(JSON.stringify({ query })); // Send the query as JSON in the request body
     
